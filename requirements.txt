@@ -1,0 +1,12 @@
+tensorflow==2.8.0
+rasterio
+numpy
+pandas
+scikit-learn
+albumentations
+matplotlib
+seaborn
+tqdm
+opencv-python
+scikit-image
+pyyaml
