@@ -40,18 +40,16 @@ unzip dataset.zip -d data/raw/
 ## 🏗 Project Structure
 
 ```
-cloud-masking/
+AI-POWERED-CLOUD-MASKING/
 ├── data/
-│   ├── raw/                  # Original dataset (to be downloaded)
-│   ├── processed/            # Processed data after augmentation/normalization
-│   ├── train/                # Training split
-│   │   ├── images/           # Training images
+│   ├── raw/                  # Original dataset
+│   │   ├── data/           # Training images
 │   │   └── masks/            # Corresponding masks
-│   └── val/                  # Validation split
-│       ├── images/           # Validation images
-│       └── masks/            # Corresponding masks
+│   ├── processed/            # Processed data after augmentation/normalization
+│   │   ├── data/           # Training images
+│   │   └── masks/            # Corresponding masks
 ├── notebooks/
-│   ├── 01_exploratory_data_analysis.ipynb
+│   ├── 01_data_analysis.ipynb
 │   ├── 02_data_preprocessing.ipynb
 │   ├── 03_classical_model_experiments.ipynb
 │   └── 04_deep_learning_experiments.ipynb
@@ -63,22 +61,23 @@ cloud-masking/
 │   ├── models/
 │   │   ├── __init__.py
 │   │   ├── unet.py           # UNet implementation
-│   │   ├── deeplab.py        # DeepLabV3 implementation
 │   │   ├── random_forest.py  # Classical model
 │   │   └── model_utils.py    # Model utilities
-│   ├── train.py              # Training script
 │   ├── evaluate.py           # Evaluation metrics
 │   ├── utils.py              # Helper functions
+│   ├── rle-encoder-decoder.py # RLE encoder and decoder
 │   └── visualization.py      # Visualization utilities
 ├── outputs/
 │   ├── models/               # Saved model weights
 │   ├── logs/                 # Training logs
+│   │   └── model_logs.txt    # Records the size of the trained model and the number of operations
 │   └── predictions/          # Prediction outputs
 ├── run_inference.py          # Inference script for test set
-├── train.py                  # Main training script
+├── test                      # Test Folder for new inference cases
 ├── requirements.txt          # Python dependencies
 ├── Dockerfile                # Docker configuration
 ├── README.md                 # Project documentation
+├── Papers/                   # Research Papers
 └── report/                   # Final report assets
     ├── figures/              # Report figures
     └── Report.pdf # Final PDF report
@@ -89,10 +88,9 @@ cloud-masking/
 | Model         | Dice Coefficient | Inference Time (512px) | Parameters |
 | ------------- | ---------------- | ---------------------- | ---------- |
 | UNet          | 0.92             | 15ms                   | 7.8M       |
-| DeepLabV3+    | 0.91             | 18ms                   | 41.3M      |
 | Random Forest | 0.85             | 8ms                    | -          |
 
-_Metrics on validation set (RTX 3080 GPU)_
+_Metrics on validation set (RTX 3060 GPU)_
 
 ## 💻 Usage
 

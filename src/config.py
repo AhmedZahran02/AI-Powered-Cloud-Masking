@@ -1,46 +1,38 @@
-import os
 from pathlib import Path
 
-# Directory paths
-BASE_DIR = Path(__file__).resolve().parent.parent
-DATA_DIR = BASE_DIR / "data"
-RAW_DATA_DIR = DATA_DIR / "raw"
-PROCESSED_DATA_DIR = DATA_DIR / "processed"
-TRAIN_DIR = DATA_DIR / "train"
-VAL_DIR = DATA_DIR / "val"
-OUTPUT_DIR = BASE_DIR / "outputs"
-MODEL_DIR = OUTPUT_DIR / "models"
+ROOT_DIR = Path(__file__).resolve().parents[1]
 
-# Dataset parameters
-IMAGE_SIZE = (512, 512)  # Target image size
-BANDS = ['B2', 'B3', 'B4', 'B8']  # Sentinel-2 bands: Blue, Green, Red, NIR
-N_CHANNELS = len(BANDS)
-BATCH_SIZE = 16
-TEST_SIZE = 0.2  # Validation split ratio
-SEED = 42
+DATA_DIR = ROOT_DIR / "data"
+RAW_DATA_PATH = DATA_DIR / "raw"
+PROCESSED_DATA_PATH = DATA_DIR / "processed"
 
-# Model parameters
-MODEL_NAME = "unet"  # Options: "unet", "deeplab", "random_forest"
-BACKBONE = "resnet34"  # For segmentation models
-LEARNING_RATE = 1e-4
-WEIGHT_DECAY = 1e-5
-PATIENCE = 5  # Early stopping patience
-MAX_EPOCHS = 50
+PROCESSED_FULLY_CLOUDED_DATA_PATH = PROCESSED_DATA_PATH / "data" / "fully_clouded"
+PROCESSED_FREE_CLOUDED_DATA_PATH = PROCESSED_DATA_PATH / "data" / "cloud_free"
+PROCESSED_PARTIALLY_CLOUDED_DATA_PATH = PROCESSED_DATA_PATH / "data" / "partially_clouded"
 
-# Augmentation parameters
-AUGMENTATION = {
-    "horizontal_flip": True,
-    "vertical_flip": True,
-    "rotate": True,
-    "brightness_range": (0.8, 1.2),
-    "contrast_range": (0.8, 1.2)
-}
+PROCESSED_FULLY_CLOUDED_MASK_PATH = PROCESSED_DATA_PATH / "masks" / "fully_clouded"
+PROCESSED_FREE_CLOUDED_MASK_PATH = PROCESSED_DATA_PATH / "masks" / "cloud_free"
+PROCESSED_PARTIALLY_CLOUDED_MASK_PATH = PROCESSED_DATA_PATH / "masks" / "partially_clouded"
 
-# Create directories if they don't exist
-os.makedirs(DATA_DIR, exist_ok=True)
-os.makedirs(RAW_DATA_DIR, exist_ok=True)
-os.makedirs(PROCESSED_DATA_DIR, exist_ok=True)
-os.makedirs(TRAIN_DIR, exist_ok=True)
-os.makedirs(VAL_DIR, exist_ok=True)
-os.makedirs(OUTPUT_DIR, exist_ok=True)
-os.makedirs(MODEL_DIR, exist_ok=True)
+PROCESSED_MISCLASSIFIED_DATA_PATH = PROCESSED_DATA_PATH / "data" / "misclassified"
+PROCESSED_MISCLASSIFIED_MASK_PATH = PROCESSED_DATA_PATH / "masks" / "misclassified"
+
+REVIEW_DIR = PROCESSED_DATA_PATH / "review"
+
+MODEL_PATH = ROOT_DIR / "outputs" / "models" / "Misclassification_model.pth"
+
+def create_dirs():
+    paths = [
+        PROCESSED_DATA_PATH,
+        PROCESSED_FULLY_CLOUDED_DATA_PATH,
+        PROCESSED_FREE_CLOUDED_DATA_PATH,
+        PROCESSED_PARTIALLY_CLOUDED_DATA_PATH,
+        PROCESSED_FULLY_CLOUDED_MASK_PATH,
+        PROCESSED_FREE_CLOUDED_MASK_PATH,
+        PROCESSED_PARTIALLY_CLOUDED_MASK_PATH,
+        PROCESSED_MISCLASSIFIED_DATA_PATH,
+        PROCESSED_MISCLASSIFIED_MASK_PATH,
+        REVIEW_DIR
+    ]
+    for path in paths:
+        path.mkdir(parents=True, exist_ok=True)

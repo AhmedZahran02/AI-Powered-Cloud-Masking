@@ -1,27 +1,33 @@
-# Use official TensorFlow image as base
-FROM tensorflow/tensorflow:2.8.0-gpu
+# Base image with PyTorch and CUDA
+FROM pytorch/pytorch:2.1.2-cuda11.8-cudnn8-runtime
 
 # Set working directory
 WORKDIR /app
 
-# Install system dependencies
+# Install system dependencies for OpenCV, GDAL (rasterio), and other libs
 RUN apt-get update && apt-get install -y \
-    git \
-    wget \
-    unzip \
+    libgl1 \
+    libglib2.0-0 \
+    libgdal-dev \
+    python3-gdal \
     && rm -rf /var/lib/apt/lists/*
 
-# Install Python dependencies
+# Copy only requirements first for caching
 COPY requirements.txt .
-RUN pip install --upgrade pip && \
-    pip install -r requirements.txt
 
-# Copy project files
+# Install Python dependencies
+RUN pip install --no-cache-dir -r requirements.txt
+
+# Copy the entire project (excluding files in .dockerignore)
 COPY . .
 
 # Environment variables
-ENV PYTHONPATH=/app
-ENV TF_FORCE_GPU_ALLOW_GROWTH=true
+ENV PYTHONUNBUFFERED=1
+ENV NVIDIA_DRIVER_CAPABILITIES=compute,utility
 
-# Command to run when container starts
-CMD ["python", "train.py"]
+# Default command (override when running)
+CMD ["python", "run_inference.py", \
+    "--test_folder", "/app/test", \
+    "--model_path", "/app/outputs/models/Unet_model.pth", \
+    "--output_csv", "/app/outputs/predictions/submission.csv", \
+    "--threshold", "0.35"]
