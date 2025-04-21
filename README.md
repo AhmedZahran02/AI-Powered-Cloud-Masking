@@ -43,11 +43,17 @@ unzip dataset.zip -d data/raw/
 AI-POWERED-CLOUD-MASKING/
 ├── data/
 │   ├── raw/                  # Original dataset
-│   │   ├── data/           # Training images
+│   │   ├── data/             # images
 │   │   └── masks/            # Corresponding masks
 │   ├── processed/            # Processed data after augmentation/normalization
-│   │   ├── data/           # Training images
+│   │   ├── data/             # Training images
+│   │   │   ├── cloud_free/
+│   │   │   ├── fully_clouded/
+│   │   │   └── partially_clouded/
 │   │   └── masks/            # Corresponding masks
+│   │       ├── cloud_free/
+│   │       ├── fully_clouded/
+│   │       └── partially_clouded/
 ├── notebooks/
 │   ├── 01_data_analysis.ipynb
 │   ├── 02_data_preprocessing.ipynb
@@ -73,6 +79,7 @@ AI-POWERED-CLOUD-MASKING/
 │   │   └── model_logs.txt    # Records the size of the trained model and the number of operations
 │   └── predictions/          # Prediction outputs
 ├── run_inference.py          # Inference script for test set
+├── run_classical_inference.py          # Inference script for test set
 ├── test                      # Test Folder for new inference cases
 ├── requirements.txt          # Python dependencies
 ├── Dockerfile                # Docker configuration

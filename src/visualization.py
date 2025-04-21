@@ -1,6 +1,4 @@
 import matplotlib.pyplot as plt
-import numpy as np
-from skimage.transform import resize
 from pathlib import Path
 
 def plot_image_and_mask(image, mask, title, save_path=None):
