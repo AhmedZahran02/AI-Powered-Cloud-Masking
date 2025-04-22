@@ -1,0 +1,104 @@
+{
+  "timestamp": "2025-04-20 13:37:50",
+  "model": "RandomForest",
+  "training_time_sec": 163.16160321235657,
+  "model_size_mb": 95.64281558990479,
+  "dataset_stats": {
+    "total_samples": 3000000,
+    "train_samples": 2400000,
+    "test_samples": 600000,
+    "class_distribution": {
+      "0": 1780712,
+      "1": 1219288
+    },
+    "category_distribution": {
+      "cloud_free": 1000000,
+      "fully_clouded": 1000000,
+      "partially_clouded": 1000000
+    }
+  },
+  "weights": {
+    "category_weights": {
+      "fully_clouded": 0.33323250204361315,
+      "cloud_free": 0.3333024743965996,
+      "partially_clouded": 0.3334650235597872
+    },
+    "class_weights": {
+      "0": 0.842359448816134,
+      "1": 1.230226669263812
+    },
+    "sample_weight_stats": {
+      "min": 0.28070154786109924,
+      "max": 0.41023755073547363,
+      "mean": 0.3333244025707245,
+      "std": 0.0634521096944809
+    }
+  },
+  "metrics": {
+    "test": {
+      "accuracy": 0.964765,
+      "precision": 0.9516981499434153,
+      "recall": 0.9621378015074347,
+      "f1": 0.9568895024582426,
+      "roc_auc": 0.9930995116215162,
+      "inference_time": 2.065728187561035
+    }
+  },
+  "feature_importances": [
+    {
+      "Feature": "Blue",
+      "Importance": 0.19002394139239775,
+      "Std": 0.1741001609426027
+    },
+    {
+      "Feature": "NDWI",
+      "Importance": 0.17957641358323312,
+      "Std": 0.153073710534862
+    },
+    {
+      "Feature": "CloudIndex",
+      "Importance": 0.17021855255627247,
+      "Std": 0.10403305907598341
+    },
+    {
+      "Feature": "NDSI",
+      "Importance": 0.1628078822493908,
+      "Std": 0.1478877748749443
+    },
+    {
+      "Feature": "NDVI",
+      "Importance": 0.12154278808301462,
+      "Std": 0.11248328986318223
+    },
+    {
+      "Feature": "Red",
+      "Importance": 0.0662724022553482,
+      "Std": 0.07407267570372426
+    },
+    {
+      "Feature": "Green",
+      "Importance": 0.05576906404963897,
+      "Std": 0.05261595073925734
+    },
+    {
+      "Feature": "IR",
+      "Importance": 0.05378895583070406,
+      "Std": 0.031807446748563104
+    }
+  ],
+  "parameters": {
+    "n_estimators": 100,
+    "max_depth": 15,
+    "min_samples_split": 5,
+    "min_samples_leaf": 5,
+    "max_features": "sqrt",
+    "random_state": 42,
+    "n_jobs": -1,
+    "verbose": 0,
+    "class_weight": null
+  },
+  "inference_speed": {
+    "pixels_per_sec": 290454.4768343449,
+    "time_per_pixel": 3.4428803126017253e-06
+  }
+}

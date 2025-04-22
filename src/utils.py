@@ -26,3 +26,42 @@ def load_and_normalize_tiff(image_path):
             image[i] = 0
 
     return image
+
+def generate_tiles(image, tile_size=128, overlap=0):
+    """Split image into tiles for memory-efficient processing"""
+    if len(image.shape) == 3:  # Multi-band image
+        h, w = image.shape[1], image.shape[2]
+        tiles = []
+        coords = []
+        
+        for y in range(0, h - overlap, tile_size - overlap):
+            if y + tile_size > h:
+                y = h - tile_size
+                
+            for x in range(0, w - overlap, tile_size - overlap):
+                if x + tile_size > w:
+                    x = w - tile_size
+                    
+                tile = image[:, y:y+tile_size, x:x+tile_size]
+                tiles.append(tile)
+                coords.append((y, x))
+                
+        return tiles, coords
+    else:  # Single band (mask)
+        h, w = image.shape
+        tiles = []
+        coords = []
+        
+        for y in range(0, h - overlap, tile_size - overlap):
+            if y + tile_size > h:
+                y = h - tile_size
+                
+            for x in range(0, w - overlap, tile_size - overlap):
+                if x + tile_size > w:
+                    x = w - tile_size
+                    
+                tile = image[y:y+tile_size, x:x+tile_size]
+                tiles.append(tile)
+                coords.append((y, x))
+                
+        return tiles, coords
