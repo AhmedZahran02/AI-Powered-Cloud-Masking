@@ -6,6 +6,7 @@ from torchvision import transforms # type: ignore
 import numpy as np
 import pandas as pd
 from src.models.unet import UNet
+from src.models.slim_unet import SlimUNet
 from src.rle_encoder_decoder import rle_encode
 from src.visualization import plot_image_and_mask
 from src.utils import load_and_normalize_tiff
@@ -44,7 +45,7 @@ def log_model_stats(model, input_size=(4, IMG_SIZE, IMG_SIZE)):
     logging.info(f"Multiply-Accumulate Operations (MACs): {macs}")
 
 def load_model(model_path):
-    model = UNet(n_channels=4, n_classes=1).to(DEVICE)
+    model = SlimUNet(n_channels=4, n_classes=1).to(DEVICE)
     model.load_state_dict(torch.load(model_path, map_location=DEVICE, weights_only=True))
     model.eval()
     return model

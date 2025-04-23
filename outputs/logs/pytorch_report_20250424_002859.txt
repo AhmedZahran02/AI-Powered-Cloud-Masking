@@ -1,0 +1,861 @@
+
+=== PyTorch Profiler Report ===
+Generated at: 2025-04-24 00:28:59
+Processed 78 images
+
+
+Key Averages Table:
+=====================================================================================================================================================================================================================================================================================================================================
+CUDA Time (ms)
+=====================================================================================================================================================================================================================================================================================================================================
+This report only display top-level ops statistics
+---------------------------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  --------------------------------------------------------------------------------  ------------  
+                             Name    Self CPU %      Self CPU   CPU total %     CPU total  CPU time avg     Self CUDA   Self CUDA %    CUDA total  CUDA time avg       CPU Mem  Self CPU Mem      CUDA Mem  Self CUDA Mem    # of Calls                                                                      Input Shapes  Total MFLOPs  
+---------------------------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  --------------------------------------------------------------------------------  ------------  
+                    ProfilerStep*         0.78%     690.897us         0.78%     690.897us     230.299us        3.925s        97.43%        3.925s        1.308s           0 b           0 b           0 b           0 b             3                                                                                []            --  
+                        aten::cat         1.09%     959.700us         1.09%     959.700us      79.975us       2.604ms         0.06%       2.604ms     217.000us           0 b           0 b     270.00 Mb     270.00 Mb            12                                                                          [[], []]            --  
+                         aten::to         1.25%       1.100ms         5.49%       4.844ms       1.615ms       1.184ms         0.03%       4.906ms       1.635ms      12.00 Mb           0 b           0 b           0 b             3                                               [[4, 512, 512], [], [], [], [], []]            --  
+                        aten::pad         1.10%     965.800us         2.79%       2.456ms     818.700us     825.000us         0.02%       1.651ms     550.333us           0 b           0 b       6.00 Mb           0 b             3                                                    [[1, 128, 64, 64], [], [], []]            --  
+                      aten::relu_         0.91%     799.100us         1.34%       1.184ms     197.300us     742.000us         0.02%       1.265ms     210.833us           0 b           0 b           0 b           0 b             6                                                                 [[1, 64, 64, 64]]            --  
+                 aten::max_pool2d         0.86%     762.300us         1.05%     923.000us     307.667us     679.000us         0.02%       1.314ms     438.000us           0 b           0 b      24.00 Mb     -48.00 Mb             3                                           [[1, 32, 512, 512], [], [], [], [], []]            --  
+                      aten::relu_         0.73%     645.500us         1.26%       1.110ms     184.967us     673.000us         0.02%       1.501ms     250.167us           0 b           0 b           0 b           0 b             6                                                                [[1, 128, 32, 32]]            --  
+                     aten::detach         0.33%     292.400us         0.40%     349.100us     116.367us     556.000us         0.01%     614.000us     204.667us           0 b           0 b           0 b           0 b             3                                                                      [[512, 512]]            --  
+                  aten::unsqueeze         0.63%     559.500us         0.68%     604.000us     201.333us     546.000us         0.01%     646.000us     215.333us           0 b           0 b           0 b           0 b             3                                                               [[4, 512, 512], []]            --  
+                         aten::to         0.19%     163.800us         6.14%       5.411ms       1.804ms     538.000us         0.01%       6.152ms       2.051ms           0 b           0 b      12.00 Mb           0 b             3                                    [[1, 4, 512, 512], [], [], [], [], [], [], []]            --  
+                         aten::to         0.20%     180.300us         5.84%       5.151ms     858.533us     517.000us         0.01%       3.111ms     518.500us       3.00 Mb           0 b           0 b           0 b             6                                          [[512, 512], [], [], [], [], [], [], []]            --  
+        aten::upsample_bilinear2d         0.75%     665.300us         0.75%     665.300us     221.767us     480.000us         0.01%     480.000us     160.000us           0 b           0 b      12.00 Mb      12.00 Mb             3                                                     [[1, 64, 64, 64], [], [], []]            --  
+                 aten::batch_norm         0.61%     537.600us         5.24%       4.617ms     769.483us     437.000us         0.01%       4.064ms     677.333us           0 b           0 b      48.00 Mb           0 b             6                  [[1, 128, 128, 128], [128], [128], [128], [128], [], [], [], []]            --  
+                     aten::conv2d         0.14%     125.300us         1.62%       1.426ms     475.433us     416.000us         0.01%       3.778ms       1.259ms           0 b           0 b      12.00 Mb           0 b             3                         [[1, 96, 256, 256], [16, 96, 3, 3], [16], [], [], [], []]      5435.818  
+        aten::upsample_bilinear2d         0.31%     269.700us         0.31%     269.700us      89.900us     351.000us         0.01%     351.000us     117.000us           0 b           0 b      48.00 Mb      48.00 Mb             3                                                   [[1, 16, 256, 256], [], [], []]            --  
+                 aten::batch_norm         0.84%     739.600us         5.53%       4.875ms     406.292us     331.000us         0.01%       5.774ms     481.167us           0 b           0 b     384.00 Mb           0 b            12                       [[1, 32, 512, 512], [32], [32], [32], [32], [], [], [], []]            --  
+        aten::upsample_bilinear2d         0.30%     263.300us         0.30%     263.300us      87.767us     307.000us         0.01%     307.000us     102.333us           0 b           0 b      24.00 Mb      24.00 Mb             3                                                   [[1, 32, 128, 128], [], [], []]            --  
+                 aten::batch_norm         0.26%     225.500us         2.97%       2.622ms     436.950us     301.000us         0.01%       2.783ms     463.833us           0 b           0 b       3.00 Mb           0 b             6                    [[1, 128, 32, 32], [128], [128], [128], [128], [], [], [], []]            --  
+        aten::upsample_bilinear2d         0.95%     838.500us         0.95%     838.500us     279.500us     286.000us         0.01%     286.000us      95.333us           0 b           0 b       6.00 Mb       6.00 Mb             3                                                    [[1, 128, 32, 32], [], [], []]            --  
+                     aten::conv2d         0.11%      98.900us         1.52%       1.341ms     447.133us     252.000us         0.01%       2.098ms     699.333us           0 b           0 b       3.00 Mb           0 b             3                         [[1, 384, 64, 64], [64, 384, 3, 3], [64], [], [], [], []]      5435.818  
+---------------------------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  --------------------------------------------------------------------------------  ------------  
+Self CPU time total: 88.186ms
+Self CUDA time total: 4.029s
+
+
+Memory Statistics:
+=====================================================================================================================================================================================================================================================================================================================================
+CUDA Memory Usage (MB)
+---------------------------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  --------------------------------------------------------------------------------  ------------  
+                             Name    Self CPU %      Self CPU   CPU total %     CPU total  CPU time avg     Self CUDA   Self CUDA %    CUDA total  CUDA time avg       CPU Mem  Self CPU Mem      CUDA Mem  Self CUDA Mem    # of Calls                                                                      Input Shapes  Total MFLOPs  
+---------------------------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  --------------------------------------------------------------------------------  ------------  
+                      aten::empty         1.68%       1.485ms         1.68%       1.485ms       6.875us       3.553ms         0.09%       3.553ms      16.449us           0 b           0 b     597.00 Mb     597.00 Mb           216                                                          [[], [], [], [], [], []]            --  
+                        aten::cat         1.09%     959.700us         1.09%     959.700us      79.975us       2.604ms         0.06%       2.604ms     217.000us           0 b           0 b     270.00 Mb     270.00 Mb            12                                                                          [[], []]            --  
+          aten::cudnn_convolution         0.70%     619.600us         0.70%     619.600us     103.267us       4.236ms         0.11%       4.236ms     706.000us           0 b           0 b     192.00 Mb     192.00 Mb             6                   [[1, 32, 512, 512], [32, 32, 3, 3], [], [], [], [], [], [], []]            --  
+              aten::empty_strided         1.03%     909.100us         1.03%     909.100us      43.290us       1.021ms         0.03%       1.021ms      48.619us      15.00 Mb      15.00 Mb     102.00 Mb     102.00 Mb            21                                                          [[], [], [], [], [], []]            --  
+          aten::cudnn_convolution         0.61%     538.600us         0.61%     538.600us     179.533us       1.278ms         0.03%       1.278ms     426.000us           0 b           0 b      96.00 Mb      96.00 Mb             3                     [[1, 4, 512, 512], [32, 4, 3, 3], [], [], [], [], [], [], []]            --  
+          aten::cudnn_convolution         0.42%     374.000us         0.42%     374.000us     124.667us       2.752ms         0.07%       2.752ms     917.333us           0 b           0 b      96.00 Mb      96.00 Mb             3                   [[1, 48, 512, 512], [32, 48, 3, 3], [], [], [], [], [], [], []]            --  
+    aten::max_pool2d_with_indices         0.18%     160.700us         0.18%     160.700us      53.567us     635.000us         0.02%     635.000us     211.667us           0 b           0 b      72.00 Mb      72.00 Mb             3                                           [[1, 32, 512, 512], [], [], [], [], []]            --  
+          aten::cudnn_convolution         0.39%     343.800us         0.39%     343.800us     114.600us       1.253ms         0.03%       1.253ms     417.667us           0 b           0 b      48.00 Mb      48.00 Mb             3                   [[1, 32, 256, 256], [64, 32, 3, 3], [], [], [], [], [], [], []]            --  
+          aten::cudnn_convolution         0.37%     325.200us         0.37%     325.200us     108.400us       2.467ms         0.06%       2.467ms     822.333us           0 b           0 b      48.00 Mb      48.00 Mb             3                   [[1, 64, 256, 256], [64, 64, 3, 3], [], [], [], [], [], [], []]            --  
+        aten::upsample_bilinear2d         0.31%     269.700us         0.31%     269.700us      89.900us     351.000us         0.01%     351.000us     117.000us           0 b           0 b      48.00 Mb      48.00 Mb             3                                                   [[1, 16, 256, 256], [], [], []]            --  
+    aten::max_pool2d_with_indices         0.33%     295.200us         0.33%     295.200us      98.400us       1.066ms         0.03%       1.066ms     355.333us           0 b           0 b      36.00 Mb      36.00 Mb             3                                           [[1, 64, 256, 256], [], [], [], [], []]            --  
+          aten::cudnn_convolution         0.55%     486.500us         0.55%     486.500us     162.167us       1.426ms         0.04%       1.426ms     475.333us           0 b           0 b      24.00 Mb      24.00 Mb             3                  [[1, 64, 128, 128], [128, 64, 3, 3], [], [], [], [], [], [], []]            --  
+          aten::cudnn_convolution         0.89%     785.100us         0.89%     785.100us     261.700us       1.950ms         0.05%       1.950ms     650.000us           0 b           0 b      24.00 Mb      24.00 Mb             3                [[1, 128, 128, 128], [128, 128, 3, 3], [], [], [], [], [], [], []]            --  
+        aten::upsample_bilinear2d         0.30%     263.300us         0.30%     263.300us      87.767us     307.000us         0.01%     307.000us     102.333us           0 b           0 b      24.00 Mb      24.00 Mb             3                                                   [[1, 32, 128, 128], [], [], []]            --  
+    aten::max_pool2d_with_indices         0.24%     209.700us         0.24%     209.700us      69.900us     320.000us         0.01%     320.000us     106.667us           0 b           0 b      18.00 Mb      18.00 Mb             3                                          [[1, 128, 128, 128], [], [], [], [], []]            --  
+          aten::cudnn_convolution         0.83%     733.200us         0.83%     733.200us     244.400us       1.284ms         0.03%       1.284ms     428.000us           0 b           0 b      12.00 Mb      12.00 Mb             3                  [[1, 128, 64, 64], [256, 128, 3, 3], [], [], [], [], [], [], []]            --  
+          aten::cudnn_convolution         1.01%     892.200us         1.01%     892.200us     297.400us       2.576ms         0.06%       2.576ms     858.667us           0 b           0 b      12.00 Mb      12.00 Mb             3                  [[1, 256, 64, 64], [256, 256, 3, 3], [], [], [], [], [], [], []]            --  
+        aten::upsample_bilinear2d         0.75%     665.300us         0.75%     665.300us     221.767us     480.000us         0.01%     480.000us     160.000us           0 b           0 b      12.00 Mb      12.00 Mb             3                                                     [[1, 64, 64, 64], [], [], []]            --  
+          aten::cudnn_convolution         0.61%     541.900us         0.61%     541.900us     180.633us       3.033ms         0.08%       3.033ms       1.011ms           0 b           0 b      12.00 Mb      12.00 Mb             3                   [[1, 96, 256, 256], [16, 96, 3, 3], [], [], [], [], [], [], []]            --  
+          aten::cudnn_convolution         0.44%     390.800us         0.44%     390.800us     130.267us     535.000us         0.01%     535.000us     178.333us           0 b           0 b      12.00 Mb      12.00 Mb             3                   [[1, 16, 256, 256], [16, 16, 3, 3], [], [], [], [], [], [], []]            --  
+---------------------------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  --------------------------------------------------------------------------------  ------------  
+Self CPU time total: 88.186ms
+Self CUDA time total: 4.029s
+
+
+Aggregate Statistics:
+Total CPU time: 237.62 ms
+
+Detailed Event Statistics:
+
+aten::lift_fresh:
+  Calls: 3
+  CPU time: 0.026ms
+
+aten::to:
+  Calls: 3
+  CPU time: 4.844ms
+
+aten::_to_copy:
+  Calls: 3
+  CPU time: 3.743ms
+
+aten::empty_strided:
+  Calls: 21
+  CPU time: 0.909ms
+
+aten::copy_:
+  Calls: 3
+  CPU time: 1.735ms
+
+aten::detach_:
+  Calls: 3
+  CPU time: 0.116ms
+
+detach_:
+  Calls: 3
+  CPU time: 0.016ms
+
+aten::to:
+  Calls: 3
+  CPU time: 0.009ms
+
+aten::unsqueeze:
+  Calls: 3
+  CPU time: 0.604ms
+
+aten::as_strided:
+  Calls: 3
+  CPU time: 0.045ms
+
+aten::to:
+  Calls: 3
+  CPU time: 5.411ms
+
+aten::_to_copy:
+  Calls: 3
+  CPU time: 5.247ms
+
+aten::copy_:
+  Calls: 3
+  CPU time: 4.819ms
+
+aten::conv2d:
+  Calls: 3
+  CPU time: 2.981ms
+
+aten::convolution:
+  Calls: 3
+  CPU time: 2.856ms
+
+aten::_convolution:
+  Calls: 3
+  CPU time: 2.075ms
+
+aten::cudnn_convolution:
+  Calls: 3
+  CPU time: 0.539ms
+
+aten::reshape:
+  Calls: 18
+  CPU time: 0.650ms
+
+aten::view:
+  Calls: 36
+  CPU time: 0.210ms
+
+aten::add_:
+  Calls: 12
+  CPU time: 0.476ms
+
+aten::batch_norm:
+  Calls: 12
+  CPU time: 4.875ms
+
+aten::_batch_norm_impl_index:
+  Calls: 12
+  CPU time: 4.136ms
+
+aten::cudnn_batch_norm:
+  Calls: 12
+  CPU time: 3.324ms
+
+aten::empty_like:
+  Calls: 12
+  CPU time: 0.606ms
+
+aten::empty:
+  Calls: 216
+  CPU time: 1.485ms
+
+[memory]:
+  Calls: 170
+  CPU time: 0.000ms
+
+aten::relu_:
+  Calls: 12
+  CPU time: 0.872ms
+
+aten::clamp_min_:
+  Calls: 12
+  CPU time: 0.489ms
+
+aten::conv2d:
+  Calls: 6
+  CPU time: 2.211ms
+
+aten::convolution:
+  Calls: 6
+  CPU time: 1.939ms
+
+aten::_convolution:
+  Calls: 6
+  CPU time: 1.703ms
+
+aten::cudnn_convolution:
+  Calls: 6
+  CPU time: 0.620ms
+
+aten::max_pool2d:
+  Calls: 3
+  CPU time: 0.923ms
+
+aten::max_pool2d_with_indices:
+  Calls: 3
+  CPU time: 0.161ms
+
+aten::conv2d:
+  Calls: 3
+  CPU time: 1.000ms
+
+aten::convolution:
+  Calls: 3
+  CPU time: 0.882ms
+
+aten::_convolution:
+  Calls: 3
+  CPU time: 0.787ms
+
+aten::cudnn_convolution:
+  Calls: 3
+  CPU time: 0.344ms
+
+aten::reshape:
+  Calls: 12
+  CPU time: 0.377ms
+
+aten::view:
+  Calls: 24
+  CPU time: 0.116ms
+
+aten::add_:
+  Calls: 6
+  CPU time: 0.235ms
+
+aten::batch_norm:
+  Calls: 6
+  CPU time: 1.980ms
+
+aten::_batch_norm_impl_index:
+  Calls: 6
+  CPU time: 1.748ms
+
+aten::cudnn_batch_norm:
+  Calls: 6
+  CPU time: 1.549ms
+
+aten::empty_like:
+  Calls: 6
+  CPU time: 0.250ms
+
+aten::relu_:
+  Calls: 6
+  CPU time: 0.547ms
+
+aten::clamp_min_:
+  Calls: 6
+  CPU time: 0.266ms
+
+aten::conv2d:
+  Calls: 3
+  CPU time: 1.404ms
+
+aten::convolution:
+  Calls: 3
+  CPU time: 1.272ms
+
+aten::_convolution:
+  Calls: 3
+  CPU time: 0.898ms
+
+aten::cudnn_convolution:
+  Calls: 3
+  CPU time: 0.325ms
+
+aten::max_pool2d:
+  Calls: 3
+  CPU time: 0.437ms
+
+aten::max_pool2d_with_indices:
+  Calls: 3
+  CPU time: 0.295ms
+
+aten::conv2d:
+  Calls: 3
+  CPU time: 1.522ms
+
+aten::convolution:
+  Calls: 3
+  CPU time: 1.430ms
+
+aten::_convolution:
+  Calls: 3
+  CPU time: 1.331ms
+
+aten::cudnn_convolution:
+  Calls: 3
+  CPU time: 0.487ms
+
+aten::reshape:
+  Calls: 12
+  CPU time: 1.444ms
+
+aten::view:
+  Calls: 24
+  CPU time: 0.167ms
+
+aten::add_:
+  Calls: 6
+  CPU time: 0.376ms
+
+aten::batch_norm:
+  Calls: 6
+  CPU time: 4.617ms
+
+aten::_batch_norm_impl_index:
+  Calls: 6
+  CPU time: 4.079ms
+
+aten::cudnn_batch_norm:
+  Calls: 6
+  CPU time: 3.619ms
+
+aten::empty_like:
+  Calls: 6
+  CPU time: 0.465ms
+
+aten::relu_:
+  Calls: 6
+  CPU time: 0.971ms
+
+aten::clamp_min_:
+  Calls: 6
+  CPU time: 0.348ms
+
+aten::conv2d:
+  Calls: 3
+  CPU time: 3.161ms
+
+aten::convolution:
+  Calls: 3
+  CPU time: 2.972ms
+
+aten::_convolution:
+  Calls: 3
+  CPU time: 2.808ms
+
+aten::cudnn_convolution:
+  Calls: 3
+  CPU time: 0.785ms
+
+aten::max_pool2d:
+  Calls: 3
+  CPU time: 0.497ms
+
+aten::max_pool2d_with_indices:
+  Calls: 3
+  CPU time: 0.210ms
+
+aten::conv2d:
+  Calls: 3
+  CPU time: 1.597ms
+
+aten::convolution:
+  Calls: 3
+  CPU time: 1.439ms
+
+aten::_convolution:
+  Calls: 3
+  CPU time: 1.258ms
+
+aten::cudnn_convolution:
+  Calls: 3
+  CPU time: 0.733ms
+
+aten::reshape:
+  Calls: 6
+  CPU time: 0.282ms
+
+aten::view:
+  Calls: 12
+  CPU time: 0.122ms
+
+aten::add_:
+  Calls: 6
+  CPU time: 0.234ms
+
+aten::batch_norm:
+  Calls: 6
+  CPU time: 2.266ms
+
+aten::_batch_norm_impl_index:
+  Calls: 6
+  CPU time: 1.922ms
+
+aten::cudnn_batch_norm:
+  Calls: 6
+  CPU time: 1.663ms
+
+aten::empty_like:
+  Calls: 6
+  CPU time: 0.263ms
+
+aten::relu_:
+  Calls: 6
+  CPU time: 0.320ms
+
+aten::clamp_min_:
+  Calls: 6
+  CPU time: 0.170ms
+
+aten::conv2d:
+  Calls: 3
+  CPU time: 1.682ms
+
+aten::convolution:
+  Calls: 3
+  CPU time: 1.605ms
+
+aten::_convolution:
+  Calls: 3
+  CPU time: 1.511ms
+
+aten::cudnn_convolution:
+  Calls: 3
+  CPU time: 0.892ms
+
+aten::max_pool2d:
+  Calls: 3
+  CPU time: 0.437ms
+
+aten::max_pool2d_with_indices:
+  Calls: 3
+  CPU time: 0.188ms
+
+aten::conv2d:
+  Calls: 3
+  CPU time: 1.431ms
+
+aten::convolution:
+  Calls: 3
+  CPU time: 1.303ms
+
+aten::_convolution:
+  Calls: 3
+  CPU time: 1.199ms
+
+aten::cudnn_convolution:
+  Calls: 3
+  CPU time: 0.630ms
+
+aten::add_:
+  Calls: 6
+  CPU time: 0.337ms
+
+aten::batch_norm:
+  Calls: 6
+  CPU time: 2.622ms
+
+aten::_batch_norm_impl_index:
+  Calls: 6
+  CPU time: 2.396ms
+
+aten::cudnn_batch_norm:
+  Calls: 6
+  CPU time: 2.101ms
+
+aten::empty_like:
+  Calls: 6
+  CPU time: 0.245ms
+
+aten::relu_:
+  Calls: 6
+  CPU time: 1.110ms
+
+aten::clamp_min_:
+  Calls: 6
+  CPU time: 0.464ms
+
+aten::conv2d:
+  Calls: 3
+  CPU time: 1.529ms
+
+aten::convolution:
+  Calls: 3
+  CPU time: 1.359ms
+
+aten::_convolution:
+  Calls: 3
+  CPU time: 1.260ms
+
+aten::cudnn_convolution:
+  Calls: 3
+  CPU time: 0.526ms
+
+aten::upsample_bilinear2d:
+  Calls: 3
+  CPU time: 0.839ms
+
+aten::pad:
+  Calls: 3
+  CPU time: 2.456ms
+
+aten::constant_pad_nd:
+  Calls: 3
+  CPU time: 1.490ms
+
+aten::clone:
+  Calls: 3
+  CPU time: 1.141ms
+
+aten::copy_:
+  Calls: 3
+  CPU time: 0.473ms
+
+aten::cat:
+  Calls: 12
+  CPU time: 0.960ms
+
+aten::conv2d:
+  Calls: 3
+  CPU time: 1.341ms
+
+aten::convolution:
+  Calls: 3
+  CPU time: 1.243ms
+
+aten::_convolution:
+  Calls: 3
+  CPU time: 1.115ms
+
+aten::cudnn_convolution:
+  Calls: 3
+  CPU time: 0.599ms
+
+aten::add_:
+  Calls: 6
+  CPU time: 0.252ms
+
+aten::batch_norm:
+  Calls: 6
+  CPU time: 3.028ms
+
+aten::_batch_norm_impl_index:
+  Calls: 6
+  CPU time: 2.725ms
+
+aten::cudnn_batch_norm:
+  Calls: 6
+  CPU time: 2.290ms
+
+aten::empty_like:
+  Calls: 6
+  CPU time: 0.349ms
+
+aten::relu_:
+  Calls: 6
+  CPU time: 1.184ms
+
+aten::clamp_min_:
+  Calls: 6
+  CPU time: 0.385ms
+
+aten::conv2d:
+  Calls: 3
+  CPU time: 1.579ms
+
+aten::convolution:
+  Calls: 3
+  CPU time: 1.382ms
+
+aten::_convolution:
+  Calls: 3
+  CPU time: 1.169ms
+
+aten::cudnn_convolution:
+  Calls: 3
+  CPU time: 0.456ms
+
+aten::upsample_bilinear2d:
+  Calls: 3
+  CPU time: 0.665ms
+
+aten::pad:
+  Calls: 3
+  CPU time: 0.656ms
+
+aten::constant_pad_nd:
+  Calls: 3
+  CPU time: 0.539ms
+
+aten::clone:
+  Calls: 3
+  CPU time: 0.433ms
+
+aten::copy_:
+  Calls: 3
+  CPU time: 0.207ms
+
+aten::conv2d:
+  Calls: 3
+  CPU time: 1.898ms
+
+aten::convolution:
+  Calls: 3
+  CPU time: 1.740ms
+
+aten::_convolution:
+  Calls: 3
+  CPU time: 1.589ms
+
+aten::cudnn_convolution:
+  Calls: 3
+  CPU time: 0.849ms
+
+aten::add_:
+  Calls: 6
+  CPU time: 0.332ms
+
+aten::batch_norm:
+  Calls: 6
+  CPU time: 3.283ms
+
+aten::_batch_norm_impl_index:
+  Calls: 6
+  CPU time: 3.032ms
+
+aten::cudnn_batch_norm:
+  Calls: 6
+  CPU time: 2.699ms
+
+aten::empty_like:
+  Calls: 6
+  CPU time: 0.373ms
+
+aten::relu_:
+  Calls: 6
+  CPU time: 0.585ms
+
+aten::clamp_min_:
+  Calls: 6
+  CPU time: 0.309ms
+
+aten::conv2d:
+  Calls: 3
+  CPU time: 1.388ms
+
+aten::convolution:
+  Calls: 3
+  CPU time: 1.257ms
+
+aten::_convolution:
+  Calls: 3
+  CPU time: 1.100ms
+
+aten::cudnn_convolution:
+  Calls: 3
+  CPU time: 0.461ms
+
+aten::upsample_bilinear2d:
+  Calls: 3
+  CPU time: 0.263ms
+
+aten::pad:
+  Calls: 3
+  CPU time: 0.596ms
+
+aten::constant_pad_nd:
+  Calls: 3
+  CPU time: 0.498ms
+
+aten::clone:
+  Calls: 3
+  CPU time: 0.407ms
+
+aten::copy_:
+  Calls: 3
+  CPU time: 0.156ms
+
+aten::conv2d:
+  Calls: 3
+  CPU time: 1.426ms
+
+aten::convolution:
+  Calls: 3
+  CPU time: 1.301ms
+
+aten::_convolution:
+  Calls: 3
+  CPU time: 1.117ms
+
+aten::cudnn_convolution:
+  Calls: 3
+  CPU time: 0.542ms
+
+aten::reshape:
+  Calls: 6
+  CPU time: 0.185ms
+
+aten::view:
+  Calls: 12
+  CPU time: 0.056ms
+
+aten::add_:
+  Calls: 6
+  CPU time: 0.247ms
+
+aten::batch_norm:
+  Calls: 6
+  CPU time: 2.371ms
+
+aten::_batch_norm_impl_index:
+  Calls: 6
+  CPU time: 2.176ms
+
+aten::cudnn_batch_norm:
+  Calls: 6
+  CPU time: 1.933ms
+
+aten::empty_like:
+  Calls: 6
+  CPU time: 0.414ms
+
+aten::relu_:
+  Calls: 6
+  CPU time: 0.606ms
+
+aten::clamp_min_:
+  Calls: 6
+  CPU time: 0.272ms
+
+aten::conv2d:
+  Calls: 3
+  CPU time: 1.267ms
+
+aten::convolution:
+  Calls: 3
+  CPU time: 1.180ms
+
+aten::_convolution:
+  Calls: 3
+  CPU time: 1.093ms
+
+aten::cudnn_convolution:
+  Calls: 3
+  CPU time: 0.391ms
+
+aten::upsample_bilinear2d:
+  Calls: 3
+  CPU time: 0.270ms
+
+aten::pad:
+  Calls: 3
+  CPU time: 0.747ms
+
+aten::constant_pad_nd:
+  Calls: 3
+  CPU time: 0.632ms
+
+aten::clone:
+  Calls: 3
+  CPU time: 0.525ms
+
+aten::copy_:
+  Calls: 3
+  CPU time: 0.227ms
+
+aten::conv2d:
+  Calls: 3
+  CPU time: 1.177ms
+
+aten::convolution:
+  Calls: 3
+  CPU time: 1.068ms
+
+aten::_convolution:
+  Calls: 3
+  CPU time: 0.956ms
+
+aten::cudnn_convolution:
+  Calls: 3
+  CPU time: 0.374ms
+
+aten::conv2d:
+  Calls: 3
+  CPU time: 1.097ms
+
+aten::convolution:
+  Calls: 3
+  CPU time: 0.982ms
+
+aten::_convolution:
+  Calls: 3
+  CPU time: 0.868ms
+
+aten::cudnn_convolution:
+  Calls: 3
+  CPU time: 0.332ms
+
+aten::reshape:
+  Calls: 3
+  CPU time: 0.107ms
+
+aten::view:
+  Calls: 3
+  CPU time: 0.014ms
+
+aten::add_:
+  Calls: 3
+  CPU time: 0.096ms
+
+aten::sigmoid:
+  Calls: 3
+  CPU time: 0.137ms
+
+aten::squeeze:
+  Calls: 3
+  CPU time: 0.168ms
+
+aten::as_strided:
+  Calls: 3
+  CPU time: 0.012ms
+
+aten::to:
+  Calls: 6
+  CPU time: 5.151ms
+
+aten::_to_copy:
+  Calls: 3
+  CPU time: 4.971ms
+
+aten::copy_:
+  Calls: 3
+  CPU time: 4.499ms
+
+aten::detach:
+  Calls: 3
+  CPU time: 0.349ms
+
+detach:
+  Calls: 3
+  CPU time: 0.057ms
+
+aten::resolve_conj:
+  Calls: 3
+  CPU time: 0.006ms
+
+aten::resolve_neg:
+  Calls: 3
+  CPU time: 0.003ms
+
+ProfilerStep*:
+  Calls: 3
+  CPU time: 0.691ms
+
+Chrome trace saved to: outputs\logs\pytorch_trace_20250424_002859.json
+Open in chrome://tracing/ for visualization

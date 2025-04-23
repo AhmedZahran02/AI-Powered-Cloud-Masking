@@ -126,7 +126,7 @@ python run_inference.py \
 ```bash
 # Build and run container
 docker build -t cloud-masking .
-docker run --gpus all -v $(pwd)/data:/app/data cloud-masking
+docker run --gpus all -it cloud-masking
 ```
 
 ## 📊 Sample Results
