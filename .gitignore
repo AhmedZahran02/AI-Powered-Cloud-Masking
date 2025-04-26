@@ -7,3 +7,5 @@ Papers/
 *.npy
 *.joblib
 *.npz
+*.pkl
+*.json

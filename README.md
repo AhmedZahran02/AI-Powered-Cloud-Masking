@@ -1,15 +1,12 @@
 # AI-Powered Cloud Masking for Satellite Imagery
 
-![Project Banner](media/image1.png)  
-_Cloud masking visualization example_
-
 ## 📌 Project Overview
 
-This repository contains an end-to-end solution for **automated cloud detection in satellite imagery** using machine learning. The system processes multi-spectral satellite data to generate accurate cloud masks, addressing a critical challenge in remote sensing applications.
+This repository contains an end-to-end solution for **automated cloud detection in satellite imagery** using machine learning and deep learning. The system processes multi-spectral satellite data to generate accurate cloud masks, addressing a critical challenge in remote sensing applications.
 
 ## 🚀 Key Features
 
-- **Multi-model Architecture**: Implements both deep learning (UNet, DeepLabV3+) and classical (Random Forest) approaches
+- **Multi-model Architecture**: Implements both deep learning (UNet) and classical (Random Forest, SGD, Ensemble) approaches
 - **Advanced Preprocessing**: Handles 4-band satellite imagery with specialized normalization
 - **Competition-Ready**: Fully compliant with Kaggle-style submission requirements
 - **Reproducible**: Docker support and detailed experiment tracking
@@ -20,14 +17,14 @@ This repository contains an end-to-end solution for **automated cloud detection 
 
 - Python 3.8+
 - NVIDIA GPU (recommended for training)
-- [CUDA 11.2](https://developer.nvidia.com/cuda-11.2.0-download-archive) and [cuDNN 8.1](https://developer.nvidia.com/cudnn) (for GPU acceleration)
+- [CUDA 11.2](https://developer.nvidia.com/cuda-11.2.0-download-archive) (for GPU acceleration)
 
 ### Setup
 
 ```bash
 # Clone repository
-git clone https://github.com/[your-username]/cloud-masking.git
-cd cloud-masking
+git clone https://github.com/AhmedZahran02/AI-Powered-Cloud-Masking.git
+cd AI-Powered-Cloud-Masking
 
 # Install dependencies
 pip install -r requirements.txt
@@ -57,7 +54,8 @@ AI-POWERED-CLOUD-MASKING/
 ├── notebooks/
 │   ├── 01_data_analysis.ipynb
 │   ├── 02_data_preprocessing.ipynb
-│   ├── 03_classical_model_experiments.ipynb
+│   ├── 03_classical_model_experiments.ipynb     # Ensemble
+│   ├── 03_classical_model_experiments_SGD.ipynb # SGD Model
 │   └── 04_deep_learning_experiments.ipynb
 ├── src/
 │   ├── __init__.py
@@ -67,12 +65,14 @@ AI-POWERED-CLOUD-MASKING/
 │   ├── models/
 │   │   ├── __init__.py
 │   │   ├── unet.py           # UNet implementation
-│   │   ├── random_forest.py  # Classical model
-│   │   └── model_utils.py    # Model utilities
-│   ├── evaluate.py           # Evaluation metrics
-│   ├── utils.py              # Helper functions
+│   │   ├── slim_unet.py      # LightWeight UNet implementation
+│   │   └── ensemble.py  # Classical model
+│   ├── evaluate.py            # Evaluation metrics
+│   ├── data_loader.py         # data loading
+│   ├── config.py              # Configiration
+│   ├── utils.py               # Helper functions
 │   ├── rle-encoder-decoder.py # RLE encoder and decoder
-│   └── visualization.py      # Visualization utilities
+│   └── visualization.py       # Visualization utilities
 ├── outputs/
 │   ├── models/               # Saved model weights
 │   ├── logs/                 # Training logs
@@ -83,19 +83,22 @@ AI-POWERED-CLOUD-MASKING/
 ├── test                      # Test Folder for new inference cases
 ├── requirements.txt          # Python dependencies
 ├── Dockerfile                # Docker configuration
+├── evaluation_function.py    # evaluate on test set
+├── submit_profile.py         # profile model pkl
 ├── README.md                 # Project documentation
 ├── Papers/                   # Research Papers
 └── report/                   # Final report assets
     ├── figures/              # Report figures
-    └── Report.pdf # Final PDF report
+    └── Report.pdf            # Final PDF report
 ```
 
 ## 🧠 Model Performance
 
-| Model         | Dice Coefficient | Inference Time (512px) | Parameters |
-| ------------- | ---------------- | ---------------------- | ---------- |
-| UNet          | 0.92             | 15ms                   | 7.8M       |
-| Random Forest | 0.85             | 8ms                    | -          |
+| Model    | Dice Coefficient | Inference Time (512 x512) | Parameters |
+| -------- | ---------------- | ------------------------- | ---------- |
+| UNet     | 0.90             | -                         | 13.4M      |
+| SlimUNet | 0.88             | -                         | 1.98M      |
+| Ensemble | 0.85             | -                         | -          |
 
 _Metrics on validation set (RTX 3060 GPU)_
 
@@ -105,10 +108,7 @@ _Metrics on validation set (RTX 3060 GPU)_
 
 ```bash
 # Train UNet model (default)
-python train.py
-
-# Train specific model
-python train.py --model deeplab --epochs 50 --batch_size 32
+Run the 04_deep_learning_experiments.ipynb notebook
 ```
 
 ### Inference
@@ -119,6 +119,13 @@ python run_inference.py \
     --test_dir path/to/test_images \
     --output_csv submission.csv \
     --model_path outputs/models/unet_best.h5
+    --threshold 0.35
+```
+
+### Profiling
+
+```bash
+python submit_profile.py outputs/models/Looser_Slim_Unet_model.pkl 1 4 256 256
 ```
 
 ### Docker Support
@@ -131,21 +138,12 @@ docker run --gpus all -it cloud-masking
 
 ## 📊 Sample Results
 
-![Prediction Examples](media/image3.png)  
 _Left: Input image | Middle: Ground truth | Right: Model prediction_
 
 ## 📚 Documentation
 
 - [Full Project Report](report/ST-Project-Report.pdf)
-- [API Reference](docs/API.md)
-- [Competition Guidelines](docs/COMPETITION.md)
 
 ## 📝 License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
-## 🙏 Acknowledgments
-
-- Cairo University Faculty of Engineering for project supervision
-- ESA Copernicus Program for sample datasets
-- TensorFlow and PyTorch communities for open-source tools
