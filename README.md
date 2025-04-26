@@ -116,16 +116,16 @@ Run the 04_deep_learning_experiments.ipynb notebook
 ```bash
 # Generate competition submission
 python run_inference.py \
-    --test_dir path/to/test_images \
+    --test_folder test
     --output_csv submission.csv \
-    --model_path outputs/models/unet_best.h5
-    --threshold 0.35
+    --model_path outputs/models/Slim_Unet_model.pth
+    --threshold 0.39473684210526316
 ```
 
 ### Profiling
 
 ```bash
-python submit_profile.py outputs/models/Looser_Slim_Unet_model.pkl 1 4 256 256
+python submit_profile.py outputs/models/Looser_Slim_Unet_model.pkl 1 4 512 512
 ```
 
 ### Docker Support
