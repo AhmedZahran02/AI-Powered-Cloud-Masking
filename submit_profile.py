@@ -2,6 +2,12 @@ import argparse
 
 import torch
 import torch.nn as nn
+        
+def count_upsample(m, x, y):
+    x = x[0]
+    nelements = y.numel()
+    total_ops = nelements
+    m.total_ops += torch.Tensor([int(total_ops)])
 
 def count_conv2d(m, x, y):
     x = x[0]
@@ -103,6 +109,8 @@ def profile(model, input_size, custom_ops = {}):
             m.register_forward_hook(count_avgpool)
         elif isinstance(m, nn.Linear):
             m.register_forward_hook(count_linear)
+        elif isinstance(m, nn.Upsample):
+            m.register_forward_hook(count_upsample)
         elif isinstance(m, (nn.Dropout, nn.Dropout2d, nn.Dropout3d)):
             pass
         else:

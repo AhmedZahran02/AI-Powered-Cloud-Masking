@@ -137,15 +137,14 @@ class ClassicalCloudDataset:
         self.class_weights = None
     
     def _get_cache_path(self, img_path):
-        """Get path for cached features"""
+        #Get path for cached features
         if self.feature_cache_dir:
             img_name = img_path.stem
             return Path(self.feature_cache_dir) / f"{img_name}_features.npz"
         return None
     
     def _stratified_sampling(self, mask, n_samples, random_state=None):
-        """Balanced sampling preserving class ratio with optional fixed random state"""
-        # Input validation
+        # Balanced sampling preserving class ratio
         if not isinstance(mask, np.ndarray):
             raise ValueError("Mask must be a numpy array")
         if n_samples <= 0:
@@ -157,15 +156,15 @@ class ClassicalCloudDataset:
         cloud_idx = np.where(flat_mask == 1)[0]
         clear_idx = np.where(flat_mask == 0)[0]
 
-        # Calculate sample counts with protection against edge cases
+        # Calculate sample counts
         n_cloud = min(len(cloud_idx), max(int(n_samples * 0.5), 100))
         n_clear = min(len(clear_idx), max(n_samples - n_cloud, 0))
 
-        # Adjust sample counts if one class is under-represented
+        # Adjust sample counts
         if n_clear < (n_samples - n_cloud):
             n_cloud = min(len(cloud_idx), max(n_samples - n_clear, 0))
 
-        # Perform sampling with type safety
+        # Perform sampling
         sampled_cloud = np.array([], dtype=np.int32)
         sampled_clear = np.array([], dtype=np.int32)
 
@@ -177,15 +176,15 @@ class ClassicalCloudDataset:
             sampled_clear = rng.choice(clear_idx, size=n_clear, replace=False)
             sampled_clear = sampled_clear.astype(np.int32)
 
-        # Combine results with type consistency
+        # Combine results
         combined = np.concatenate([sampled_cloud, sampled_clear])
         return combined.astype(np.int32) if len(combined) > 0 else np.array([], dtype=np.int32)
     
     def process_image_pair(self, img_path, mask_path, category, random_state=None):
-        """Process a single image-mask pair, with caching"""
+        # Process a single image-mask pair, with caching
         cache_path = self._get_cache_path(img_path)
 
-        # Try to load from cache first
+        # Try to load from cache
         if cache_path and cache_path.exists() and config.PRECOMPUTE_FEATURES:
             try:
                 cached = np.load(cache_path)
@@ -225,10 +224,10 @@ class ClassicalCloudDataset:
             # Sampling for balanced classes
             if self.mode == 'train':
                 max_samples = min(config.MAX_SAMPLES_PER_IMAGE // len(img_tiles), len(labels))
-                if max_samples > 0:  # Only sample if we have samples to take
+                if max_samples > 0:  # Only sample if we have samples left
                     idx = self._stratified_sampling(mask_tile, max_samples, random_state)
                     if len(idx) > 0:  # Check we got valid indices
-                        idx = np.asarray(idx, dtype=np.int32)  # Ensure integer type
+                        idx = np.asarray(idx, dtype=np.int32)
                         features = features[idx]
                         labels = labels[idx]
 
@@ -252,7 +251,8 @@ class ClassicalCloudDataset:
         return None, None
     
     def batch_generator(self, random_state=None):
-        """Generate batches of features and labels"""
+        # Generate batches of features and labels
+        
         # Process all image pairs in parallel
         all_features = []
         all_labels = []
@@ -290,8 +290,6 @@ class ClassicalCloudDataset:
         X = np.vstack(all_features)
         y = np.hstack(all_labels)
 
-        # Rest of the method remains the same...
-        # For validation/test, we might want to use all data
         if self.mode != 'train':
             if len(y) > config.MAX_SAMPLES_PER_IMAGE * 10:
                 idx = np.random.choice(len(y), config.MAX_SAMPLES_PER_IMAGE * 10, replace=False)
@@ -300,7 +298,7 @@ class ClassicalCloudDataset:
             yield X, y
             return
 
-        # For training, shuffle and batch
+        # For training => shuffle and batch
         indices = np.arange(len(y))
         rng = np.random.RandomState(random_state) if random_state is not None else np.random
         rng.shuffle(indices)
@@ -315,7 +313,7 @@ class ClassicalCloudDataset:
             start_idx += config.BATCH_SIZE
     
     def calculate_class_weights(self):
-        """Compute global class weights"""
+        # Compute global class weights
         class_counts = {0: 0, 1: 0}
         
         for _, mask_path, _ in self.image_pairs:

@@ -20,7 +20,8 @@ class EnsembleModel:
         self.feature_importances = None
     
     def _create_ensemble(self, class_weights=None):
-        """Create a voting ensemble of classifiers"""
+        # voting classifiers
+        
         # SGD Classifier
         sgd = SGDClassifier(**{
             **config.SGD_PARAMS,
@@ -33,7 +34,7 @@ class EnsembleModel:
             'class_weight': class_weights
         })
         
-        # Linear SVM (calibrated for probability outputs)
+        # Linear SVM
         svm = CalibratedClassifierCV(
             LinearSVC(**{
                 **config.SVM_PARAMS, 
@@ -56,7 +57,6 @@ class EnsembleModel:
         return ensemble
     
     def select_features(self, X, y):
-        """Perform feature selection"""
         print("Performing feature selection...")
         
         # Initialize and fit a RandomForest for feature importance
@@ -90,10 +90,8 @@ class EnsembleModel:
         return X_selected
     
     def fit(self, train_gen_func, val_gen_func=None, class_weights=None):
-        """Train the model with early stopping"""
         print("Starting model training...")
         
-        # Get initial batch of data for feature selection and scaling
         for X_train, y_train in train_gen_func():
             break
         
@@ -128,10 +126,10 @@ class EnsembleModel:
                 if config.FEATURE_SELECTION:
                     X_batch = self.feature_selector.transform(X_batch)
                 
-                # Partial fit for incremental learning
+                # Partial fit
                 if hasattr(self.model, 'partial_fit'):
                     self.model.partial_fit(X_batch, y_batch, classes=[0, 1])
-                else:  # For non-incremental models, accumulate data and fit once
+                else:  # For non incremental models, accumulate data and fit once
                     if batch_count == 0:
                         X_accumulated = X_batch
                         y_accumulated = y_batch
@@ -141,7 +139,7 @@ class EnsembleModel:
                 
                 batch_count += 1
             
-            # For non-incremental models, fit on accumulated data
+            # For non incremental models, fit on accumulated data
             if not hasattr(self.model, 'partial_fit') and batch_count > 0:
                 print(f"Fitting model on {len(y_accumulated)} samples...")
                 self.model.fit(X_accumulated, y_accumulated)
@@ -180,7 +178,7 @@ class EnsembleModel:
                         no_improvement_count = 0
                         # Save best model
                         self.save(config.MODEL_PATH / "best_model.joblib")
-                        print("↑ New best model saved ↑")
+                        print("New best model saved")
                     else:
                         no_improvement_count += 1
                         print(f"No improvement ({no_improvement_count}/{config.EARLY_STOP_PATIENCE})")
@@ -194,7 +192,6 @@ class EnsembleModel:
         return val_metrics_history
     
     def predict(self, X):
-        """Make binary predictions"""
         # Preprocess
         X = self.scaler.transform(X)
         if config.FEATURE_SELECTION and self.feature_selector is not None:
@@ -204,7 +201,6 @@ class EnsembleModel:
         return self.model.predict(X)
     
     def predict_proba(self, X):
-        """Predict probabilities"""
         # Preprocess
         X = self.scaler.transform(X)
         if config.FEATURE_SELECTION and self.feature_selector is not None:
@@ -214,11 +210,9 @@ class EnsembleModel:
         if hasattr(self.model, 'predict_proba'):
             return self.model.predict_proba(X)[:, 1]
         else:
-            # Fall back to binary predictions
             return self.predict(X).astype(float)
     
     def save(self, path):
-        """Save model and preprocessing components"""
         model_data = {
             'model': self.model,
             'scaler': self.scaler,
@@ -231,7 +225,6 @@ class EnsembleModel:
     
     @classmethod
     def load(cls, path):
-        """Load model from file"""
         model_data = joblib.load(path)
         
         model = cls()

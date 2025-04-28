@@ -14,7 +14,6 @@ def iou_score(pred, target, smooth=1e-6):
     return (intersection + smooth) / (union + smooth)
 
 def calculate_metrics(y_true, y_pred, y_proba=None):
-    """Calculate comprehensive evaluation metrics"""
     metrics = {
         'accuracy': accuracy_score(y_true, y_pred),
         'precision': precision_score(y_true, y_pred, zero_division=0),
@@ -28,6 +27,6 @@ def calculate_metrics(y_true, y_pred, y_proba=None):
         try:
             metrics['roc_auc'] = roc_auc_score(y_true, y_proba)
         except Exception:
-            metrics['roc_auc'] = 0.5  # Default value if calculation fails
+            metrics['roc_auc'] = 0.5 
     
     return metrics

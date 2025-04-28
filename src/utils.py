@@ -17,7 +17,6 @@ def load_and_normalize_tiff(image_path):
     with rasterio.open(image_path) as src:
         image = src.read().astype(np.float32)  # shape: (C, H, W)
 
-    # Normalize each band like in your dataset loader
     for i in range(image.shape[0]):
         band = image[i]
         if band.max() > band.min():
@@ -28,8 +27,8 @@ def load_and_normalize_tiff(image_path):
     return image
 
 def generate_tiles(image, tile_size=128, overlap=0):
-    """Split image into tiles for memory-efficient processing"""
-    if len(image.shape) == 3:  # Multi-band image
+    # Split image into tiles for memory-efficient processing
+    if len(image.shape) == 3: 
         h, w = image.shape[1], image.shape[2]
         tiles = []
         coords = []

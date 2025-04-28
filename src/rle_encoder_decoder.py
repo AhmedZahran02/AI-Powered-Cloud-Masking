@@ -18,29 +18,33 @@ def rle_encode(mask):
 
     return " ".join(map(str, runs))  # Convert to string format
 
-def rle_decode(mask_rle, shape):
-    """
-    Decodes an RLE-encoded string into a binary mask.
+def rle_decode(mask_rle: str, shape=(256, 256)) -> np.ndarray:
+    """Decodes an RLE-encoded string into a binary mask with validation checks."""
     
-    Args:
-        mask_rle (str): RLE-encoded string.
-        shape (tuple): (height, width) of the output mask.
-    
-    Returns:
-        np.ndarray: Decoded binary mask.
-    """
-    if not mask_rle:
+    if not isinstance(mask_rle, str) or not mask_rle.strip() or mask_rle.lower() == 'nan':
+        # Return all-zero mask if RLE is empty, invalid, or NaN
         return np.zeros(shape, dtype=np.uint8)
-
-    s = list(map(int, mask_rle.split()))
-    starts, lengths = s[0::2], s[1::2]  # Separate start positions and lengths
-
-    mask = np.zeros(shape[0] * shape[1], dtype=np.uint8)  # Create a flat mask
+    
+    try:
+        s = list(map(int, mask_rle.split()))
+    except:
+        raise Exception("RLE segmentation must be a string and containing only integers")
+    
+    if len(s) % 2 != 0:
+        raise Exception("RLE segmentation must have even-length (start, length) pairs")
+    
+    if any(x < 0 for x in s):
+        raise Exception("RLE segmentation must not contain negative values")
+    
+    mask = np.zeros(shape[0] * shape[1], dtype=np.uint8)
+    starts, lengths = s[0::2], s[1::2]
+    
     for start, length in zip(starts, lengths):
-        mask[start:start + length] = 1  # Fill mask with 1s
-
-    return mask.reshape(shape, order='F')  # Reshape in column-major order
-
+        if start >= mask.size or start + length > mask.size:
+            raise Exception("RLE indices exceed image size")
+        mask[start:start + length] = 1
+    
+    return mask.reshape(shape, order='F')  # Convert to column-major order
 
 def generate_random_mask(shape, probability=0.5):
     """
@@ -59,7 +63,6 @@ def generate_random_mask(shape, probability=0.5):
 if __name__ == "__main__":
     mask_shape = (9, 2)
     random_mask = generate_random_mask(mask_shape, probability=0.5)
-
     print("Random mask:")
     print(random_mask)
 
@@ -67,4 +70,6 @@ if __name__ == "__main__":
     print("\nRLE-encoded string:")
     print(rle_string)
     decoded_mask = rle_decode(rle_string, mask_shape)
+    print("Decoded Mask")
+    print(decoded_mask)
     assert np.all(decoded_mask == random_mask), "Decoding is not the inverse of encoding!"

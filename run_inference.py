@@ -103,8 +103,12 @@ def main(test_folder, output_csv, model_path, threshold=0.5, visualize=False):
 
             image_tensor = torch.tensor(image).float()  # (C, H, W)
 
-            mask = predict(model, image_tensor, threshold)        
-            mask_resized = resize(mask, (512, 512), order=0, mode='reflect', preserve_range=True)
+            mask = predict(model, image_tensor, threshold)  
+            
+            if np.mean(mask) < 0.01:  # If nearly all pixels are 0
+                mask[:] = 0
+                  
+            mask_resized = resize(mask, (256, 256), order=0, mode='reflect', preserve_range=True)
             mask_resized = (mask_resized > 0.5).astype(np.uint8) 
 
             # RLE Encoding

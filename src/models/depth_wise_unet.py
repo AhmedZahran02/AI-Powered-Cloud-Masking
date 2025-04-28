@@ -89,7 +89,7 @@ class EfficientUNet(nn.Module):
         self.bilinear = bilinear
         
         # Reduced feature channels throughout the network
-        base_filters = 32  # Starting with fewer filters (was 64)
+        base_filters = 32 
         
         # First layer uses standard convolutions as the input channels are just 4
         self.inc = EfficientDoubleConv(n_channels, base_filters, use_depthwise=False)

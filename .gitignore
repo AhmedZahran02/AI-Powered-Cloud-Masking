@@ -2,10 +2,11 @@
 *.zip
 *.7z
 *.png
-*.pth
 Papers/
 *.npy
 *.joblib
 *.npz
 *.pkl
 *.json
+outputs/models/Misclassification_model.pth
+outputs/models/Unet_model.pth

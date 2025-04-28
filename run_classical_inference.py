@@ -43,8 +43,6 @@ def log_classical_model_stats(model):
     logging.info(f"Memory usage (RSS): {memory_mb:.2f} MB")
 
 def predict_full_image(model, image_path):
-    """Predict cloud mask for a full image with tiling"""
-    # Load image
     image = load_and_normalize_tiff(image_path)
     if image is None:
         print(f"Failed to load image: {image_path}")
@@ -59,38 +57,19 @@ def predict_full_image(model, image_path):
     
     # Process each tile
     for tile, (y, x) in zip(img_tiles, coords):
-        # Extract features
         indices = calculate_spectral_indices(tile)
         features = extract_features(tile, indices)
         
-        # Get probabilities
         proba = model.predict_proba(features)
         
-        # Reshape to tile shape
         tile_mask = proba.reshape(config.TILE_SIZE, config.TILE_SIZE)
         
         # Place in full mask
         full_mask[y:y+config.TILE_SIZE, x:x+config.TILE_SIZE] = tile_mask
     
-    # Apply threshold and post-processing
-    # binary_mask = (full_mask > config.PROBABILITY_THRESHOLD).astype(np.uint8)
-    
-    # if config.POST_PROCESS:
-    #     # Remove small isolated pixels (noise)
-    #     binary_mask = ndimage.binary_opening(
-    #         binary_mask, 
-    #         structure=np.ones((config.MORPHOLOGY_SIZE, config.MORPHOLOGY_SIZE))
-    #     )
-        
-    #     # Fill small holes
-    #     binary_mask = ndimage.binary_closing(
-    #         binary_mask, 
-    #         structure=np.ones((config.MORPHOLOGY_SIZE, config.MORPHOLOGY_SIZE))
-    #     )
-    
     if config.POST_PROCESS:
         high_threshold = 0.75
-        low_threshold = 1.0  # Adjust based on your proba_map scale
+        low_threshold = 1.0 
         cloud_free_threshold = 0.05
 
         strong_clouds = full_mask > high_threshold
@@ -143,7 +122,6 @@ def predict_classical(model: EnsembleModel, test_folder, output_csv, visualize=F
     if visualize:
         os.makedirs(prediction_dir, exist_ok=True)
 
-    # Load all image paths from the test folder
     test_folder_path = Path(test_folder)
     image_files = list(test_folder_path.glob("*.tif"))
 
@@ -153,7 +131,7 @@ def predict_classical(model: EnsembleModel, test_folder, output_csv, visualize=F
         # Predict
         t0 = time.time()
         image,predicted_mask = predict_full_image(model, image_file)
-        mask_resized = resize(predicted_mask, (512, 512), order=0, mode='reflect', preserve_range=True)
+        mask_resized = resize(predicted_mask, (256, 256), order=0, mode='reflect', preserve_range=True)
         mask_resized = (mask_resized > 0.5).astype(np.uint8)
         elapsed = time.time() - t0
 

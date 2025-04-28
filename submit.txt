@@ -1,0 +1,2 @@
+python run_inference.py --test_folder test --output_csv submission.csv --model_path outputs/models/new_unet_model.pth --threshold 0.8 --visualize
+

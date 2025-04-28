@@ -96,8 +96,8 @@ AI-POWERED-CLOUD-MASKING/
 
 | Model    | Dice Coefficient | Inference Time (512 x512) | Parameters |
 | -------- | ---------------- | ------------------------- | ---------- |
-| UNet     | 0.90             | -                         | 13.4M      |
-| SlimUNet | 0.88             | -                         | 1.98M      |
+| UNet     | 0.92             | -                         | 13.4M      |
+| SlimUNet | 0.895            | -                         | 1.98M      |
 | Ensemble | 0.85             | -                         | -          |
 
 _Metrics on validation set (RTX 3060 GPU)_

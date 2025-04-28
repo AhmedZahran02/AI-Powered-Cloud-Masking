@@ -4,22 +4,19 @@ from scipy import ndimage
 from src.config import config
 
 def calculate_spectral_indices(image):
-    """Calculate multiple spectral indices"""
-    # Ensure float32 dtype and handle NaN values
     bands = []
     for i in range(image.shape[0]):
         band = image[i].astype('float32')
         band = np.nan_to_num(band, nan=0.0)
         bands.append(band)
     
-    # Unpack bands
     if len(bands) == 4:
         blue, green, red, nir = bands
     else:
         raise ValueError(f"Expected 4 bands, got {len(bands)}")
     
     indices = {}
-    eps = 1e-6  # Prevent division by zero
+    eps = 1e-6 
     
     # Standard indices
     with np.errstate(divide='ignore', invalid='ignore'):
@@ -52,7 +49,6 @@ def calculate_spectral_indices(image):
     return indices
 
 def calculate_spatial_features(band, window_size):
-    """Calculate spatial features with uniform filtering"""
     # Mean and variance
     mean = uniform_filter(band, size=window_size)
     mean_sq = uniform_filter(band**2, size=window_size)
@@ -72,20 +68,19 @@ def calculate_spatial_features(band, window_size):
     return np.stack([mean, std, min_val, max_val, range_val, edge], axis=-1)
 
 def calculate_texture_features(band, window_size):
-    """Calculate GLCM-like texture features"""
-    # Simple texture descriptors without computing full GLCM
+    # Calculate GLCM texture features
     features = []
     
-    # Local entropy (approximation)
+    # entropy
     entropy = uniform_filter(band * np.log(band + 1e-10), size=window_size)
     features.append(entropy)
     
-    # Contrast-like (local variance)
+    # Contrast
     mean = uniform_filter(band, size=window_size)
     variance = uniform_filter((band - mean)**2, size=window_size)
     features.append(variance)
     
-    # Homogeneity-like (inverse of local range)
+    # Homogeneity
     min_val = minimum_filter(band, size=window_size)
     max_val = maximum_filter(band, size=window_size)
     range_val = max_val - min_val + 1e-6
@@ -95,7 +90,6 @@ def calculate_texture_features(band, window_size):
     return np.stack(features, axis=-1)
 
 def extract_features(image, indices=None):
-    """Extract comprehensive feature set from image"""
     if image.shape[0] != 4:
         raise ValueError(f"Expected 4 bands, got {image.shape[0]}")
     
@@ -114,7 +108,7 @@ def extract_features(image, indices=None):
     total_features = (
         n_bands +  # Raw bands
         n_spectral +  # Spectral indices
-        n_bands * n_spatial_per_band * n_scales +  # Multi-scale spatial features
+        n_bands * n_spatial_per_band * n_scales +  # Spatial features
         n_bands * n_texture_per_band  # Texture features
     )
     
@@ -157,7 +151,7 @@ def extract_features(image, indices=None):
         end_col = start_col + n_texture_per_band
         features[:, start_col:end_col] = texture.reshape(n_pixels, n_texture_per_band)
     
-    # Clean up any remaining NaNs or infs
+    # handle NaNs or infs
     features = np.nan_to_num(features, nan=0.0, posinf=0.0, neginf=0.0)
     
     return features

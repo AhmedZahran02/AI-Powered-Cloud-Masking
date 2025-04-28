@@ -3,7 +3,6 @@ import torch.nn as nn
 import torch.nn.functional as F
 
 class DoubleConv(nn.Module):
-    """Two consecutive 3×3 convs with BatchNorm + ReLU."""
     def __init__(self, in_ch, out_ch):
         super().__init__()
         self.double_conv = nn.Sequential(
@@ -19,7 +18,6 @@ class DoubleConv(nn.Module):
         return self.double_conv(x)
 
 class Down(nn.Module):
-    """Downscaling with maxpool then DoubleConv."""
     def __init__(self, in_ch, out_ch):
         super().__init__()
         self.maxpool_conv = nn.Sequential(
@@ -31,7 +29,6 @@ class Down(nn.Module):
         return self.maxpool_conv(x)
 
 class Up(nn.Module):
-    """Upscaling then DoubleConv. Uses bilinear or ConvTranspose2d."""
     def __init__(self, in_ch, out_ch, bilinear=True):
         super().__init__()
         if bilinear:
@@ -54,7 +51,6 @@ class Up(nn.Module):
         return self.conv(x)
 
 class OutConv(nn.Module):
-    """1×1 conv to map to output classes."""
     def __init__(self, in_ch, out_ch):
         super().__init__()
         self.conv = nn.Conv2d(in_ch, out_ch, kernel_size=1)
@@ -63,7 +59,6 @@ class OutConv(nn.Module):
         return self.conv(x)
 
 class SlimUNet(nn.Module):
-    """UNet with channel widths [32,64,128,256,256]."""
     def __init__(self, n_channels, n_classes, bilinear=True, base=32):
         super().__init__()
         factor = 2 if bilinear else 1
